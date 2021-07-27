@@ -1,14 +1,21 @@
 <?php
- require "character.php";
- require "Hero.php";
- require "Orc.php";
+require "character.php";
+require "Hero.php";
+require "Orc.php";
 
- $Hero = new Hero(2000, 0, "blaster", 250, "cap", 600);
- $Orc = new Orc(500, 0);
+$Hero = new Hero(2000, 3000, 0, 30, "espadon", 400, 600, "armure de plaque", 800, 1500);
+$Mage = new Hero(1000, 1500, 0, 20, "baton flamme froide", 600, 800, "robe noire", 500, 700);
+$Assasin = new Hero(800, 1300, 0, 20, "dague empoisonnée", 600, 800, "cape", 300, 400);
+$Dev = new Hero(1500, 1800, 0, 40, "ordinateur vieillissant", 400, 700, "câble RJ-45", 300, 500);
+
+$Orc = new Orc(1000, 1300, 0, 20, "ongles", 200, 400);
+$Uruk = new Hero(1500, 2000, 0, 20, "ongles", 200, 400, "piques", 700, 1000);
+$Coronuviras = new Hero(2000, 3000, 0, 20, "masse", 700, 1000, "peau de chauve-souris", 500, 700);
+$Bug = new Hero(1, 9999, 0, 5, "AirèmeTiréEfEToile", 500, 800, "erreur système", 10, 600);
 
 
- var_dump($Hero);
- var_dump($Orc);
+var_dump($Hero);
+var_dump($Orc);
 
 $round = 0;
 
@@ -30,12 +37,11 @@ $round = 0;
     </style>
 </head>
 <body>
-<?php while ($Hero->get_health() >= 0) {
+<?php while ($Hero->get_health() > 0) {
         $Orc->attack();
         $Hero->attacked($Orc->get_damage());
         $round++; 
         if ($Hero->get_rage() >= 100) {
-            
             if ($Orc->attacked($Hero->get_weaponDamage()) <= 0) {
                 break;
             }
@@ -51,15 +57,14 @@ $round = 0;
         } else { ?>
             <p>Dégâts absorbé par l'armure : <?= $Hero->get_shieldValue() ?></p>
             <p>Dégâts non absorbé par l'armure : <?= $Orc->get_damage() - $Hero->get_shieldValue() ?> </p>
-                <?php
-        }?>
+        <?php } ?>
             <p>Rage : <?= $Hero->get_rage() ?></p>
-            <p>Santé : <?= $Hero->get_health() ?> </p>
-            <p>Orc Santé : <?= $Orc->get_health() ?> </p>
+            <p>Santé : <?= $Hero->get_health() ?></p>
+            <p>Orc Santé : <?= $Orc->get_health() ?></p>
         </div>
 
     <?php
 }
- ?>
+?>
 </body>
 </html>

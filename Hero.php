@@ -106,9 +106,11 @@ class Hero extends Character {
     public function set_shieldValue($shieldValue): self
     {
         $this->_shieldValue = $shieldValue;
-
         return $this;
     }
+
+    private $_weaponDamageMin;
+    private $_weaponDamageMax;
 
     //constructor
     /**
@@ -120,14 +122,14 @@ class Hero extends Character {
      * @param string $shield
      * @param int $shieldValue
      */
-    public function __construct(int $health, int $rage, string $weapon, int $weaponDamage, string $shield, int $shieldValue) {
-        parent::__construct($health, $rage);
+    public function __construct(int $healthmin, int $healthmax, int $rage, int $increaseRage, string $weapon, int $weaponDamageMin, int $weaponDamageMax, string $shield, int $shieldValueMin, int $shieldValueMax) {
+        parent::__construct($healthmin, $healthmax, $rage, $increaseRage);
         $this->_weapon = $weapon;
-        $this->_weaponDamage = $weaponDamage;
         $this->_shield = $shield;
-        $this->_shieldValue = $shieldValue;
-        //return a string with all parameters
-        return $this->get_health() . " " . $this->get_rage() . " " . $this->_weapon . " " . $this->_weaponDamage . " " . $this->_shield . " " . $this->_shieldValue;
+        $this->_shieldValue = random_int($shieldValueMin, $shieldValueMax);
+        $this->_weaponDamageMin = $weaponDamageMin;
+        $this->_weaponDamageMax = $weaponDamageMax;
+        $this->attack();
     }
 
     /**
@@ -140,16 +142,24 @@ class Hero extends Character {
             /* $this->_shieldValue = 0; */
         }
             /* $this->_shieldValue -= $orcDamage; */
-        $this->increaseRage();
+        $this->increaseRage(30);
         return $this->get_health();
     }
 
     /**
      * Rage up
+     * @param int $num
      */
-    public function increaseRage(){    
-        $this->set_rage($this->get_rage() + 30);
+    public function increaseRage(int $num){    
+        $this->set_rage($this->get_rage() + $num);
         return $this->get_rage();
     }
+
+    public function attack(){
+        $damage = random_int($this->_weaponDamageMin, $this->_weaponDamageMax);
+        $this->_weaponDamage = $damage;
+        return $this->_weaponDamage;
+    }
+
 
 }

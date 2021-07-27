@@ -14,6 +14,13 @@ class Character{
      * @var integer
      */
     private $_rage;
+    /**
+     * Attribut concernant la rage qui s'ajoute du personnage
+     * @var integer
+     */
+    private $_increaseRage;
+
+
 
     /**
      * Get the value of _health
@@ -57,12 +64,34 @@ class Character{
     }
 
     /**
+     * Get the value of _increaseRage
+     * 
+     * @return integer
+     */
+    public function get_increaseRage(): int
+    {
+        return $this->_increaseRage;
+    }
+
+    /**
+     * Set the value of _increaseRage
+     * @param integer $increaseRage
+     * @return self
+     */
+    public function set_increaseRage($increaseRage): self
+    {
+        $this->_increaseRage = $increaseRage;
+        return $this;
+    }
+
+    /**
      * @param int $health
      * @param int $rage
      */
-    public function __construct($health, $rage){
-        $this->_health = $health;
+    public function __construct($healthmin, $healthmax, $rage, $increaseRage){
+        $this->_health = random_int($healthmin, $healthmax);
         $this->_rage = $rage;
+        $this->_increaseRage = $increaseRage;
     }
     
 }
